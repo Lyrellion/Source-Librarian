@@ -1,0 +1,12 @@
+# fly.toml app configuration file generated for source-librarian on 2024-06-19T20:41:33+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'source-librarian'
+primary_region = 'ewr'
+
+[build]
+
+[[vm]]
+  size = 'shared-cpu-1x'
