@@ -1,4 +1,4 @@
-import {ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder} from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export const claims = {
     command: new SlashCommandBuilder()

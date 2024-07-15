@@ -1,8 +1,8 @@
 import type { Handler } from "../../util/register";
-import {ALL, Guild} from "../../util/guilds";
-import {ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, SlashCommandStringOption} from "discord.js";
-import {getFeatures} from "../../util/features";
-import {SharedSlashCommand} from "@discordjs/builders";
+import { ALL, Guild } from "../../util/guilds";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
+import { getFeatures } from "../../util/features";
+import { SharedSlashCommand } from "@discordjs/builders";
 
 const commandToHelp = (command: SharedSlashCommand) => {
     const str = [];

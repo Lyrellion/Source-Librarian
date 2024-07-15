@@ -6,9 +6,9 @@ import {
     ChatInputCommandInteraction, EmbedBuilder,
     SlashCommandBuilder,
 } from "discord.js";
-import {BASE_URL, CDN_BASE_URL, instance} from "../../util/blockprints/http";
-import {Schematic} from "../../util/blockprints/types/schematic";
-import {BLOCKPRINTS} from "../../util/guilds";
+import { BASE_URL, CDN_BASE_URL, instance } from "../../util/blockprints/http";
+import { Schematic } from "../../util/blockprints/types/schematic";
+import { BLOCKPRINTS } from "../../util/guilds";
 
 const command = {
     command: new SlashCommandBuilder()
