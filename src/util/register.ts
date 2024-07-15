@@ -1,5 +1,6 @@
 import {BaseInteraction, Client, ClientEvents, Collection, CommandInteraction, Events} from "discord.js";
 import { SharedSlashCommand } from "@discordjs/builders";
+import {Guild} from "./guilds";
 
 export type Command<T extends SharedSlashCommand = SharedSlashCommand, I extends BaseInteraction = CommandInteraction> = {
     command: T;
@@ -11,6 +12,7 @@ export type Handler<T extends SharedSlashCommand = SharedSlashCommand> = {
         [key in keyof ClientEvents]?: (...args: ClientEvents[key]) => void;
     }
     commands?: Command<T>[];
+    guilds?: Guild[];
 }
 
 export const registerCommands = (client: Client, handlers: Handler[]) => {

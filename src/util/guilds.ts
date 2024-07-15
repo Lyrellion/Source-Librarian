@@ -1,0 +1,10 @@
+export enum Guild {
+    ARS_NOUVEAU = "743298050222587978",
+    ARCANE_ADDITIONS = "1226186715111227534",
+    BLOCKPRINTS = "1173375132606140476",
+    DEV = "634618557464051772"
+}
+
+export const ALL = Object.values(Guild);
+export const ARS = [Guild.ARS_NOUVEAU, Guild.ARCANE_ADDITIONS, Guild.DEV];
+export const BLOCKPRINTS = [Guild.ARS_NOUVEAU, Guild.BLOCKPRINTS, Guild.DEV];

@@ -18,6 +18,7 @@ export interface Schematic {
     blockCount: BlockCount;
     mods: string[];
     size: [number, number, number];
+    id: string;
 }
 
 export interface Error {

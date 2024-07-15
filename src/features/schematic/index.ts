@@ -8,6 +8,7 @@ import {
 } from "discord.js";
 import {BASE_URL, CDN_BASE_URL, instance} from "../../util/blockprints/http";
 import {Schematic} from "../../util/blockprints/types/schematic";
+import {BLOCKPRINTS} from "../../util/guilds";
 
 const command = {
     command: new SlashCommandBuilder()
@@ -45,11 +46,13 @@ const command = {
 
         const mostUsedText = mostUsed.map(([block, count]) => `${count.toString().padStart(maxLength, ' ')} ${block}`)
 
+        const url = `${BASE_URL}schematic/${data.id}`
+
         const firstImage = data.previewImages[0];
         const embed = new EmbedBuilder()
             .setColor(0x231631)
             .setTitle(`${data.name} by ${data.playerName}`)
-            .setURL(`${BASE_URL}${data.schematic}`)
+            .setURL(url)
             .setDescription(data.description)
             .setImage(`${CDN_BASE_URL}${firstImage}`)
             .setFooter({ text: schematicId })
@@ -62,7 +65,7 @@ const command = {
 
         const open = new ButtonBuilder()
             .setLabel('View Schematic')
-            .setURL(`${BASE_URL}${data.schematic}`)
+            .setURL(url)
             .setStyle(ButtonStyle.Link);
 
         const row = new ActionRowBuilder()
@@ -70,11 +73,12 @@ const command = {
 
         await interaction.reply({
             embeds: [embed],
-            components: [row]
+            components: [row as never]
         });
     }
 }
 
 export default {
-    commands: [command]
+    commands: [command],
+    guilds: BLOCKPRINTS
 } as Handler;
