@@ -7,6 +7,8 @@ export type Command<T extends SharedSlashCommand = SharedSlashCommand, I extends
     execute: (interaction: I) => Promise<void>;
 };
 
+export type EventHandler<k extends keyof ClientEvents> = (...args: ClientEvents[k]) => void;
+
 export type Handler<T extends SharedSlashCommand = SharedSlashCommand> = {
     events?: {
         [key in keyof ClientEvents]?: (...args: ClientEvents[key]) => void;
