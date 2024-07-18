@@ -47,7 +47,14 @@ const getGlyphDescription = (...addons: AddonLink[]) => {
 export const glyphs = {
     command: new SlashCommandBuilder()
         .setName("addonglyphs")
-        .setDescription("Which addon gives which popular glyphs?"),
+        .setDescription("Which addon gives which popular glyphs?")
+        .addUserOption(
+            option => option
+                .setName("user")
+                .setDescription("The command's target")
+                .setRequired(false)
+        )
+        .setDMPermission(false),
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
 
         const embed = new EmbedBuilder()
@@ -67,8 +74,12 @@ export const glyphs = {
                 { name: 'Noticed a problem?', value: "Please raise an issue with <@202407548916203520>" },
             );
 
+        const user = interaction.options.getUser("user");
+
         await interaction.reply({
-            embeds: [embed]
+            content: user != null ? `${user}` : undefined,
+            embeds: [embed],
+            ephemeral: user == null,
         });
     }
 }

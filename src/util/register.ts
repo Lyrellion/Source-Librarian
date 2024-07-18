@@ -53,23 +53,13 @@ export const registerEvents = (client: Client, handler: Handler) => {
     if (handler.events) {
         const events = handler.events;
         const keys = Object.keys(events);
-        for (const key in keys) {
+        for (const key of keys) {
             const event = key as keyof ClientEvents;
             const method = events[event];
             if (method) {
                 // @ts-expect-error Resulting type of method is too complex
-                client.on(event, (...args: ClientEvents[typeof event]) => method(...args));
+                client.on(event, (...args: ClientEvents[typeof event]) => console.log("received") || method(...args));
             }
-        }
-    }
-
-    if (handler.commands) {
-        for (const command of handler.commands) {
-            client.on(Events.InteractionCreate, async interaction => {
-                if (!interaction.isChatInputCommand()) return;
-
-
-            });
         }
     }
 }

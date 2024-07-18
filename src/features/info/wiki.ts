@@ -3,7 +3,14 @@ import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "
 export const wiki = {
     command: new SlashCommandBuilder()
         .setName("wiki")
-        .setDescription("Information about the Ars Nouveau wiki"),
+        .setDescription("Information about the Ars Nouveau wiki")
+        .addUserOption(
+            option => option
+                .setName("user")
+                .setDescription("The command's target")
+                .setRequired(false)
+        )
+        .setDMPermission(false),
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const embed = new EmbedBuilder()
             .setColor(0x231631)
@@ -15,8 +22,12 @@ export const wiki = {
                 { name: 'Noticed a problem?', value: "Please raise an issue on the [GitHub Repository](https://github.com/Sarenor/arsnouveau-wiki/issues)" },
             );
 
+        const user = interaction.options.getUser("user");
+
         await interaction.reply({
-            embeds: [embed]
+            content: user != null ? `${user}` : undefined,
+            embeds: [embed],
+            ephemeral: user == null,
         });
     }
 }

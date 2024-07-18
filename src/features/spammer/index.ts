@@ -11,11 +11,15 @@ const cache = new LRUCache<Snowflake, number>({
 const maxMentions = 3;
 
 const handleMessage: EventHandler<Events.MessageCreate> = async (message: Message) => {
+    console.log("Got message")
     if (!message.mentions.everyone || !message.inGuild()) return;
+
+    console.log("Mentioned Everyone");
 
     let amount = 1;
     if (cache.has(message.author.id)) {
         amount += cache.get(message.author.id) as number;
+        console.log("Cache had ID", amount);
         if (amount >= maxMentions) {
             console.log("Should ban", message.author.displayName);
             // await message.member!.ban({

@@ -3,7 +3,14 @@ import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "
 export const claims = {
     command: new SlashCommandBuilder()
         .setName("claims")
-        .setDescription("How to solve common claims issues"),
+        .setDescription("How to solve common claims issues")
+        .addUserOption(
+            option => option
+                .setName("user")
+                .setDescription("The command's target")
+                .setRequired(false)
+        )
+        .setDMPermission(false),
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
 
         const lines = [
@@ -21,8 +28,12 @@ export const claims = {
                 { name: 'Noticed a problem?', value: "Please raise an issue with <@202407548916203520>" },
             );
 
+        const user = interaction.options.getUser("user");
+
         await interaction.reply({
-            embeds: [embed]
+            content: user != null ? `${user}` : undefined,
+            embeds: [embed],
+            ephemeral: user == null,
         });
     }
 }

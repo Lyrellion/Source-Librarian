@@ -21,13 +21,15 @@ const commandToHelp = (command: SharedSlashCommand) => {
 export const help = {
     command: new SlashCommandBuilder()
         .setName("help")
-        .setDescription("List all available commands"),
+        .setDescription("List all available commands")
+        .addUserOption(
+            option => option
+                .setName("user")
+                .setDescription("The command's target")
+                .setRequired(false)
+        )
+        .setDMPermission(false),
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-        if (interaction.guildId === null) {
-            await interaction.reply({ content: "Please use this command inside a server.", ephemeral: true });
-            return;
-        }
-
         const features = await getFeatures();
         const commands = [];
 
@@ -45,8 +47,12 @@ export const help = {
                 commands.map(([name, value]) => ({ name, value, inline: true }))
             );
 
+        const user = interaction.options.getUser("user");
+
         await interaction.reply({
-            embeds: [embed]
+            content: user != null ? `${user}` : undefined,
+            embeds: [embed],
+            ephemeral: user == null,
         });
     }
 }
