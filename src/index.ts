@@ -1,7 +1,8 @@
 import 'dotenv/config'
-import {Client, Events, GatewayIntentBits} from "discord.js";
-import {getFeatures} from "./util/features";
-import {registerCommands, registerEvents} from "./util/register";
+import { Client, Events, GatewayIntentBits } from "discord.js";
+import { getFeatures } from "./util/features";
+import { registerCommands, registerEvents } from "./util/register";
+import { serve } from "./api";
 
 const token = process.env.DISCORD_TOKEN;
 if (!token) throw new Error('No Discord Token Provided');
@@ -12,6 +13,8 @@ const main = async () => {
     const client = new Client({
         intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent]
     });
+
+    serve(client);
 
     registerCommands(client, features);
 

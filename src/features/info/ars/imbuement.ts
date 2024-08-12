@@ -15,7 +15,7 @@ const configMap: ConfigMap = {
     imbuement: {
         name: "Imbuement Chamber",
         title: `Imbuement Chamber not Enchanting Apparatus`,
-        image: "https://media.discordapp.net/stickers/1041603362157760602.webp?size=320",
+        image: "https://i.imgur.com/3YG8c6e.png",
         text: [
             "Oops, it looks like you've used an Enchanting Apparatus instead of an Imbuement Chamber",
         ]
@@ -23,7 +23,7 @@ const configMap: ConfigMap = {
     enchanting: {
         name: "Enchanting Apparatus",
         title: `Enchanting Apparatus not Imbuement Chamber`,
-        image: "https://media.discordapp.net/stickers/1041603444223528970.webp?size=320",
+        image: "https://i.imgur.com/88FE6iD.png",
         text: [
             "Oops, it looks like you've used an Imbuement Chamber instead of an Enchanting Apparatus",
         ]
