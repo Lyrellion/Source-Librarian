@@ -1,10 +1,10 @@
 import type { Handler } from "../../util/register";
 import {
     ActionRowBuilder, BaseMessageOptions,
-    ButtonBuilder,
+    ButtonBuilder, ButtonInteraction,
     ButtonStyle,
     ChatInputCommandInteraction, EmbedBuilder,
-    SlashCommandBuilder,
+    SlashCommandBuilder, TextChannel,
 } from "discord.js";
 import { BASE_URL, CDN_BASE_URL, instance } from "../../util/blockprints/http";
 import { Schematic } from "../../util/blockprints/types/schematic";
@@ -50,8 +50,13 @@ export const schematic = async (schematicId: string): Promise<Result<BaseMessage
         .setURL(url)
         .setStyle(ButtonStyle.Link);
 
+    const report = new ButtonBuilder()
+        .setCustomId("report")
+        .setLabel("Report")
+        .setStyle(ButtonStyle.Danger);
+
     const row = new ActionRowBuilder()
-        .addComponents(open);
+        .addComponents(open, report);
 
     return Result.ok({
         embeds: [embed],
@@ -88,5 +93,43 @@ const command = {
 
 export default {
     commands: [command],
-    guilds: BLOCKPRINTS
+    guilds: BLOCKPRINTS,
+    buttons: {
+        report: async (interaction): Promise<void> => {
+            const confirm = new ButtonBuilder()
+                .setCustomId('confirm_report')
+                .setLabel('Confirm Ban')
+                .setStyle(ButtonStyle.Danger);
+
+            const cancel = new ButtonBuilder()
+                .setCustomId('cancel_report')
+                .setLabel('Cancel')
+                .setStyle(ButtonStyle.Secondary);
+
+            const row = new ActionRowBuilder()
+                .addComponents(cancel, confirm);
+
+            const response = await interaction.reply({
+                content: `Are you sure you want to report this schematic?`,
+                components: [row as never],
+                ephemeral: true
+            });
+
+            try {
+                const confirmation = await response.awaitMessageComponent({ filter: (i) => i.user.id === interaction.user.id, time: 60_000 });
+                if (confirmation.customId === "confirm_report") {
+                    const channel = await interaction.client.channels.fetch("1244647477387202604")
+
+                    if (channel instanceof TextChannel) {
+                        await channel.send({ content: `Report received from ${interaction.user}\n${interaction.message.url}` });
+                        return;
+                    }
+                } else if (confirmation.customId === "cancel_report") {
+                    await confirmation.update({ content: 'Action cancelled', components: [] });
+                }
+            } catch (e) {
+                await interaction.editReply({ content: 'Confirmation not received within 1 minute, cancelling', components: [] });
+            }
+        }
+    }
 } as Handler;
