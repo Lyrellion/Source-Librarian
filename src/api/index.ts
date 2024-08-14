@@ -1,5 +1,5 @@
 import { App } from "@tinyhttp/app"
-import {Client, TextChannel} from "discord.js";
+import {Client, TextChannel, ThreadAutoArchiveDuration} from "discord.js";
 import {schematic} from "../features/schematic";
 import {json} from "milliparsec";
 import {Result} from "typescript-result";
@@ -24,7 +24,12 @@ export const serve = (client: Client) => {
             await schem.mapCatching(async success => {
                 const channel = await client.channels.fetch(req.params.channel);
                 if (channel instanceof TextChannel) {
-                    await channel.send(success);
+                    const message = await channel.send(success.message);
+                    const thread = await message.startThread({
+                        name: `Discussion: ${success.schematic.name}`,
+                        autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+                    });
+                    await message.edit({ content: thread.url })
                     return Result.ok();
                 }
                 return Result.error("Invalid Channel Type");
