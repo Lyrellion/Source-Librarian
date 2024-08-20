@@ -17,59 +17,58 @@ interface Response {
 }
 
 export const schematic = async (schematicId: string): Promise<Result<Response, BaseMessageOptions>> => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data } = await instance.get<Schematic>(`/schematics/${schematicId}`).catch(_ => ({ data: null }));
-    if (data == null) {
-        return Result.error({ content: "Unable to retrieve this schematic. Please try again later.", ephemeral: true })
-    }
-
-    if (!data.public) {
-        return Result.error({ content: "This schematic is private", ephemeral: true });
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const mostUsed = Object.entries(data.blockCount).sort(([_k1, v1], [_k2, v2]) => v2 - v1).slice(0, 5);
-    const maxLength = mostUsed[0][1].toString().length;
-
-    const mostUsedText = mostUsed.map(([block, count]) => `${count.toString().padStart(maxLength, ' ')} ${block}`)
-
-    const url = `${BASE_URL}schematic/${data.id}`
-
-    const firstImage = data.previewImages[0];
-    const embed = new EmbedBuilder()
-        .setColor(0x231631)
-        .setTitle(`${data.name} by ${data.playerName}`)
-        .setURL(url)
-        .setDescription(data.description)
-        .setImage(`${CDN_BASE_URL}${firstImage}`)
-        .setFooter({ text: schematicId })
-        .setTimestamp(data.createdAt._seconds * 1000)
-        .addFields(
-            { name: '5 Most Used Blocks', value: mostUsedText.join("\n") },
-            { name: 'Mod Count', value: `${data.mods.length}`, inline: true },
-            { name: 'Size', value: `${data.size.join("x")}`, inline: true },
-        );
-
-    const open = new ButtonBuilder()
-        .setLabel('View Schematic')
-        .setURL(url)
-        .setStyle(ButtonStyle.Link);
-
-    const report = new ButtonBuilder()
-        .setCustomId("report")
-        .setLabel("Report")
-        .setStyle(ButtonStyle.Danger);
-
-    const row = new ActionRowBuilder()
-        .addComponents(open, report);
-
-    return Result.ok({
-        message: {
-            embeds: [embed],
-            components: [row as never]
-        },
-        schematic: data
-    });
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { data } = await instance.get<Schematic>(`/schematics/${schematicId}`).catch(_ => ({ data: null }));
+            if (data == null) {
+                return Result.error({ content: "Unable to retrieve this schematic. Please try again later.", ephemeral: true })
+            }
+        
+            if (!data.public) {
+                return Result.error({ content: "This schematic is private", ephemeral: true });
+            }
+        
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const mostUsedBlocks = Object.entries(data.blockCount).sort(([_k1, v1], [_k2, v2]) => v2 - v1).slice(0, 5);
+            const maxLength = mostUsedBlocks[0][1].toString().length;
+            const mostUsedBlocksText = mostUsedBlocks.map(([block, count]) => `${count.toString().padStart(maxLength, ' ')} ${block}`)
+        
+            const url = `${BASE_URL}schematic/${data.id}`
+        
+            const firstImage = data.previewImages[0];
+            const embed = new EmbedBuilder()
+                .setColor(0x231631)
+                .setTitle(`${data.name} by ${data.playerName}`)
+                .setURL(url)
+                .setDescription(data.description)
+                .setImage(`${CDN_BASE_URL}${firstImage}`)
+                .setFooter({ text: schematicId })
+                .setTimestamp(data.createdAt._seconds * 1000)
+                .addFields(
+                    { name: `5 Most Used Blocks`, value: mostUsedBlocksText.join("\n") },
+                    { name: 'Mod Count', value: `${data.mods.filter(mod => mod !== "minecraft").length}`, inline: true },
+                    { name: 'Size', value: `${data.size.join("x")}`, inline: true },
+                );
+        
+            const open = new ButtonBuilder()
+                .setLabel('View Schematic')
+                .setURL(url)
+                .setStyle(ButtonStyle.Link);
+        
+            const report = new ButtonBuilder()
+                .setCustomId("report")
+                .setLabel("Report")
+                .setStyle(ButtonStyle.Danger);
+        
+            const row = new ActionRowBuilder()
+                .addComponents(open, report);
+        
+            return Result.ok({
+                message: {
+                    embeds: [embed],
+                    components: [row as never]
+                },
+                schematic: data
+            });
 }
 
 const command = {

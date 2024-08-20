@@ -28,6 +28,7 @@
     "@flydotio/dockerfile": "^0.5.7",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^20.14.2",
+    "commander": "^12.1.0",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.0"

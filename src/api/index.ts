@@ -30,6 +30,7 @@ export const serve = (client: Client) => {
                         autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
                     });
                     await message.edit({ content: thread.url })
+                    await message.react("❤️")
                     return Result.ok();
                 }
                 return Result.error("Invalid Channel Type");

@@ -7,8 +7,9 @@ import { claims } from "./ars/claims";
 import { spells } from "./ars/spells";
 import { enchanting, imbuement } from "./ars/imbuement";
 import {ancient} from "./ars/ancient";
+import {guide} from "./ars/guide";
 
 export default {
-    commands: [wiki, mana, glyphs, claims, spells, imbuement, enchanting, ancient],
+    commands: [wiki, mana, glyphs, claims, spells, imbuement, enchanting, ancient, guide],
     guilds: ARS
 } as Handler;

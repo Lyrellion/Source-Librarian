@@ -23,7 +23,8 @@ const main = async () => {
         }
 
         try {
-            console.log(`Started refreshing ${commands.length} application (/) commands.`);
+            console.log(`Started refreshing ${commands.length} application (/) commands for ${guildId}`);
+            console.log(`${commands.map(command => command.name).join(', ')}`);
 
             const data = await rest.put(
                 Routes.applicationGuildCommands(clientId, guildId),
