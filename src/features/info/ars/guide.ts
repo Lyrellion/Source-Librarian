@@ -34,7 +34,7 @@ export const guide
             }
 
             const first = res.value
-            const content = NodeHtmlMarkdown.translate(first.rawDescription.replaceAll("**", ""));
+            const content = NodeHtmlMarkdown.translate(first.rawDescription).replaceAll("**", "");
 
             const embed = new EmbedBuilder()
                 .setColor(0x231631)

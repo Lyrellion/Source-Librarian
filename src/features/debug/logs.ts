@@ -22,6 +22,8 @@ export const logs = {
             .setTitle(`:notepad_spiral: Log Sharing`)
             .setDescription(lines.join("\n"))
             .addFields(
+                { name: 'Where can I find my logs?', value: "Go to your instance or .minecraft folder and upload the logs/latest.log file" },
+                { name: 'How about crash reports?', value: "Crash reports can be found in your instance or .minecraft folder under the crash-reports sub-folder. This is only made when a crash is registered, so if it doesn't exist that's fine." },
                 { name: 'Noticed a problem?', value: "Please raise an issue with <@202407548916203520>" },
             );
 

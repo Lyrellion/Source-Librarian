@@ -1,6 +1,5 @@
 import { search as ddg, SafeSearchType } from "duck-duck-scrape";
 import {Result} from "typescript-result";
-import {NodeHtmlMarkdown} from "node-html-markdown";
 
 type Cache = Map<string, string>;
 const caches: Map<string, Cache> = new Map();
