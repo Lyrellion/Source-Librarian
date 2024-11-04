@@ -135,6 +135,7 @@ export const data = new LRUCache<string, Mod>({
     allowStaleOnFetchAbort: true,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     fetchMethod: async (key, stale, { options, signal, context }) => {
+        console.log(`Re-fetching data from key: ${key}`);
         const { data: root } = await instance.get<Root>(`/mods/${key}`);
         if (root == null) {
             throw new Error("Unable to retrieve mod")

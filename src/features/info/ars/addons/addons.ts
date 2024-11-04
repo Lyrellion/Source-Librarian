@@ -50,9 +50,13 @@ export const addons = {
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const subcommand = interaction.options.getSubcommand();
 
-        await interaction.deferReply({
-            ephemeral: interaction.options.getBoolean("broadcast") !== true,
-        });
+        try {
+            await interaction.deferReply({
+                ephemeral: interaction.options.getBoolean("broadcast") !== true,
+            });
+        } catch(error) {
+            //
+        }
 
         if (subcommand === "featured") {
             const featured = Object.values(addonData).filter(value => value.featured).map(value => value.id);
@@ -60,7 +64,7 @@ export const addons = {
             const fields: APIEmbedField[] = [];
 
             for (const id of featured) {
-                const mod = await data.fetch(id);
+                const mod = await data.fetch(id, { signal: AbortSignal.timeout(5000) });
                 if (mod === undefined) continue;
 
                 const versions = mod.versions.map(version => `[${version.name}](${version.link})`).join(", ");
@@ -98,7 +102,7 @@ export const addons = {
             const fields: APIEmbedField[] = [];
 
             for (const id of addons) {
-                const mod = await data.fetch(id);
+                const mod = await data.fetch(id, { signal: AbortSignal.timeout(5000) });
                 if (mod === undefined) continue;
 
                 const versions = mod.versions.map(version => `[${version.name}](${version.link})`).join(", ");
@@ -120,16 +124,16 @@ export const addons = {
             return;
         }
 
-        if (subcommand === "addon") {
-            const id = interaction.options.getString("addon");
-            if (id == null) {
+        if (subcommand === "info") {
+            const id = interaction.options.getString("name");
+            if (id === null) {
                 await interaction.editReply({
                     content: "No Addon ID provided"
                 });
                 return;
             }
-            const mod = await data.fetch(id);
-            if (mod == undefined) {
+            const mod = await data.fetch(id, { signal: AbortSignal.timeout(5000) });
+            if (mod === undefined) {
                 await interaction.editReply({
                     content: "Unable to retrieve addon data"
                 });
@@ -167,5 +171,9 @@ export const addons = {
             });
             return;
         }
+
+        await interaction.editReply({
+            content: `Command not found: ${subcommand}`
+        })
     }
 }
