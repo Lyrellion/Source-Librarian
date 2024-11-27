@@ -1,4 +1,5 @@
 import {
+    channelMention,
     ChatInputCommandInteraction,
     EmbedBuilder, SlashCommandBooleanOption,
     SlashCommandBuilder, time, TimestampStyles
@@ -148,12 +149,18 @@ export const addons = {
                 { name: "Downloads", value: `${mod.download_count.toLocaleString()}`, inline: true }
             ];
 
+            const addon = Object.values(addonData).find(val => val.id === id);
+
             if (mod.issues != null) {
                 fields.push( { name: "Issues", value: `${mod.issues}` })
             }
 
             if (mod.source != null) {
                 fields.push( { name: "Source", value: `${mod.source}` })
+            }
+
+            if (addon && addon.channel) {
+                fields.push({ name: "Discussion", value: `${channelMention(addon.channel)}` });
             }
 
             const embed = new EmbedBuilder()
