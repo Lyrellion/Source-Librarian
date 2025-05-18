@@ -3,10 +3,12 @@ import {instance} from "../../../../util/curseforge/http";
 import {Root} from "../../../../util/curseforge/types/mod";
 
 export const categories = [
-    { name: "Content", value: "content", description: "Focused on adding new content." },
-    { name: "Compat", value: "compat", description: "Focused on integrating with other mods." },
+    { name: "Essentials", value: "essentials", description: "Can be considered an essential part of the Ars experience." },
+    { name: "Supplementals", value: "supplementals", description: "Focused on adding new content." },
+    { name: "Compatability", value: "compat", description: "Focused on integrating with other mods." },
     { name: "Power Fantasy", value: "power-fantasy", description: "Focused on increasing the players power level." },
-    { name: "Utility", value: "utility", description: "Focused on tweaks or quality-of-life improvements." },
+    { name: "Retextures", value: "retextures", description: "Comprehensive texture packs." },
+    { name: "Inadvisable", value: "inadvisable", description: "Not recommended for use due to poor quality." },
 ] as const;
 
 export type Categories = (typeof categories[number])["value"];
@@ -21,18 +23,18 @@ interface Addon {
 export const addons: Record<string, Addon> = {
     "ars-additions": {
         id: "974408",
-        categories: ["content"],
+        categories: ["essentials"],
         featured: true,
         channel: "1207058223421595749",
     },
     "ars-controle": {
         id: "1061812",
-        categories: ["content"],
+        categories: ["supplementals"],
         channel: "1262068003072114750",
     },
     "ars-technica": {
         id: "1096161",
-        categories: ["content", "compat"],
+        categories: ["supplementals", "compat"],
         featured: true,
         channel: "1281613727824613467",
     },
@@ -43,7 +45,7 @@ export const addons: Record<string, Addon> = {
     },
     "ars-instrumentum": {
         id: "580179",
-        categories: ["content", "utility"],
+        categories: ["supplementals"],
         channel: "1019845252426776616",
     },
     "ars-energistique": {
@@ -53,38 +55,38 @@ export const addons: Record<string, Addon> = {
     },
     "not-enough-glyphs": {
         id: "1023517",
-        categories: ["utility"],
+        categories: ["essentials"],
         featured: true,
         channel: "1222861594657030205"
     },
     "ars-trinkets": {
         id: "950506",
-        categories: ["power-fantasy"],
+        categories: ["supplementals","power-fantasy"],
         channel: "1189292470631141376",
     },
     "starbunclemania": {
         id: "746215",
-        categories: ["content"],
+        categories: ["supplementals"],
         channel: "1039885588310020176",
     },
     "adams-ars-plus": {
         id: "1011093",
-        categories: ["power-fantasy"],
+        categories: ["supplementals","power-fantasy"],
         channel: "1235001538611511357"
     },
     "ars-omega": {
         id: "597007",
-        categories: ["power-fantasy", "content"],
+        categories: ["power-fantasy", "supplementals"],
         channel: "1019672498213761084"
     },
     "ars-delight": {
         id: "1131668",
-        categories: ["content", "compat"],
+        categories: ["supplementals", "compat"],
         channel: "1301539822640435261"
     },
     "ars-elemental": {
         id: "561470",
-        categories: ["content"],
+        categories: ["essentials"],
         featured: true,
         channel: "1235001538611511357",
     },
@@ -105,28 +107,101 @@ export const addons: Record<string, Addon> = {
     },
     "ars-fauna": {
         id: "1055577",
-        categories: ["content"],
+        categories: ["supplementals"],
         channel: "1258041008633942136",
     },
     "ars-artifice": {
         id: "854169",
-        categories: ["content"],
+        categories: ["supplementals"],
         channel: "1100053890411532408",
     },
     "too-many-glyphs": {
         id: "560595",
-        categories: ["utility"],
+        categories: ["essentials"],
         channel: "1022658726647316560",
     },
     "ars-artillery": {
         id: "1070559",
-        categories: ["content"],
+        categories: ["supplementals"],
         channel: "1265774509554794526",
     },
     "ars-caelum": {
         id: "821651",
-        categories: ["content"],
-    }
+        categories: ["supplementals"],
+    },
+    "ars-elemancy": {
+        id: "1153666",
+        categories: ["supplementals", "power-fantasy"],
+        channel: "1303504513830752306",
+    },
+    "all-the-arcanist-gear": {
+        id: "1094032",
+        categories: ["supplementals", "power-fantasy"],
+    },
+    "ars-unification": {
+        id: "1165429",
+        categories: ["compat"],
+    },
+    "ars-polymorphia": {
+        id: "1197614",
+        categories: ["supplementals"],
+    },
+    "enigmatic-unity": {
+        id: :808025",
+        categories: ["compat"],
+    },
+    "custom-machinery-ars-nouveau": {
+        id: "969074",
+        categories: ["compat"],
+    },
+    "modular-machinery-reborn-ars-nouveau": {
+        id: "1132269",
+        categories: ["compat"],
+    },
+    "reliquified-ars-nouveau": {
+        id: "1196449",
+        categories: ["supplementals","compat"],
+    },
+    "ars-nouveau-brassified": {
+        id: "934703",
+        categories: ["retextured"],
+    },
+    "ars-nouveau-refresh": {
+        id: "1080571",
+        categories: ["retextured"],
+    },
+    "ars-loafers": {
+        id: "1254524",
+        categories: ["retextured"],
+    },
+    "ars-technic": {
+        id: "929916",
+        categories: ["inadvisable"],
+    },
+    "ars-nouveau-extended-glyphs": {
+        id: "936742",
+        categories: ["inadvisable"],
+    },
+    "geore-nouveau": {
+        id: "667803",
+        categories: ["compat"],
+    },
+    "not-enough-sourcelinks": {
+        id: "1159429",
+        categories: ["inadvisable"],
+    },
+    "ars-expanded-combat": {
+        id: "957830",
+        categories: ["compat"],
+    },
+    "hex-ars-linker": {
+        id: "1134295",
+        categories: ["compat"],
+    },
+    "ars-knights-n-mages": {
+        id: "914713",
+        categories: ["supplementals"],
+    },
 };
 
 interface Version {
